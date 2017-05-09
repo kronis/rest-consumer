@@ -1,6 +1,6 @@
 def spring_boot = '1.4.2.RELEASE'
 def spring_plugin = '1.2.0.RELEASE'
-def spring_cloud = '1.1.5.RELEASE'
+def spring_cloud = '1.3.0.RELEASE'
 
 def groovy = '2.4.6'
 
