@@ -12,7 +12,7 @@ public class GreetingService {
     @HystrixCommand(fallbackMethod = "defaultGreeting")
     public String getGreeting(String username) {
         return new RestTemplate()
-                .getForObject("http://localhost:9090/my-dummy-api/greeting/{username}",
+                .getForObject("http://producer:8080/my-dummy-api/greeting/{username}",
                         String.class, username);
     }
 

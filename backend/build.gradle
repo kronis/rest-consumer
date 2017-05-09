@@ -1,14 +1,11 @@
 buildscript {
-
     repositories {
         mavenLocal()
         jcenter()
     }
 
-
     dependencies {
         classpath buildLibraries.boot_gradle_plugin
-        classpath buildLibraries.docker
     }
 }
 
@@ -16,6 +13,17 @@ plugins {
 	id "com.gorylenko.gradle-git-properties" version "1.4.17"
 }
 
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'no.tine.hystrix'
+            artifactId 'rest-consumer'
+            from components.java
+        }
+    }
+}
 
 apply plugin: 'org.springframework.boot'
 
@@ -23,10 +31,8 @@ ext {
 	snippetsDir = file('build/generated-snippets')
 }
 
-
 sourceSets {
 }
-
 
 configurations {
 }
@@ -57,6 +63,7 @@ test {
 }
 
 jar {
+    archiveName = "app.jar" // "Added" with Dockerfile to image
 }
 
 bootRun {
@@ -74,18 +81,3 @@ idea {
         downloadSources = true
     }
 }
-
-apply plugin: 'docker'
-task buildDocker(type: Docker) {
-    baseImage = 'develar/java:latest'
-    push = project.hasProperty('push')
-    tag = 'ehv5de64442b6.azurecr.io/kronis/rest-consumer'
-    addFile {
-        from jar
-        rename { 'app.jar' }
-    }
-    entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'])
-    exposePort(8080)
-}
-
-buildDocker.dependsOn(build)
