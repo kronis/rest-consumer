@@ -14,7 +14,7 @@ node {
   }
 
   stage('Build image') {
-    app = docker.build("${env.JOB_NAME}")
+    app = docker.build("tine/${env.JOB_NAME}")
   }
 
   stage('Push docker image') {
