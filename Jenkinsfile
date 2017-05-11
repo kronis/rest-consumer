@@ -10,7 +10,7 @@ node {
   }
 
   stage('Maven publish') {
-    sh "./gradlew publishToMavenLocal"
+    //sh "./gradlew publishToMavenLocal"
   }
 
   stage('Build image') {
